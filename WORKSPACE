@@ -1,8 +1,13 @@
 workspace(name = "envoy_filter_example")
 
 local_repository(
+    name = "envoy_build_config",
+    path = "/build/envoy-filter-example/envoy_build_config",
+)
+
+local_repository(
     name = "envoy",
-    path = "envoy",
+    path = "/workspaces/envoy",
 )
 
 load("@envoy//bazel:api_binding.bzl", "envoy_api_binding")

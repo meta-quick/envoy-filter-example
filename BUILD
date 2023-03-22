@@ -7,13 +7,28 @@ load(
     "envoy_cc_test",
 )
 
+load(
+    "@envoy//bazel:envoy_build_system.bzl",
+    "envoy_cc_binary",
+    "envoy_cc_test",
+    "envoy_contrib_package",
+)
+load(
+    "@envoy//contrib:all_contrib_extensions.bzl",
+    "ARM64_SKIP_CONTRIB_TARGETS",
+    "PPC_SKIP_CONTRIB_TARGETS",
+    "envoy_all_contrib_extensions",
+)
+
+#envoy_contrib_package()
+
 envoy_cc_binary(
     name = "envoy",
     repository = "@envoy",
     deps = [
         ":echo2_config",
         "@envoy//source/exe:envoy_main_entry_lib",
-    ],
+    ], # + envoy_all_contrib_extensions(),
 )
 
 envoy_cc_library(
@@ -36,6 +51,7 @@ envoy_cc_library(
     repository = "@envoy",
     deps = [
         ":echo2_lib",
+	"//http-filter-example:http_filter_lib",
         "@envoy//envoy/network:filter_interface",
         "@envoy//envoy/registry:registry",
         "@envoy//envoy/server:filter_config_interface",
